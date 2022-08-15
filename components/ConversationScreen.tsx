@@ -86,7 +86,7 @@ const ConversationScreen = ({conversation, messages} : {conversation:Conversatio
 	const [newMessage, setNewMessage] = useState("")
 	const endOfMessagesRef = useRef<HTMLDivElement>(null)
 
-    const {recipient, recipientEmail} = useRecipient(conversationUsers)
+	const { recipientEmail, recipient } = useRecipient(conversationUsers)
 
 	const router = useRouter()
 	const conversationId = router.query.id
@@ -147,7 +147,7 @@ const ConversationScreen = ({conversation, messages} : {conversation:Conversatio
 		}
 	}
 
-	const sendMessageOnClick: MouseEventHandler<HTMLButtonElement> = event => {
+	const sendMessageOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
 		event.preventDefault()
 		if (!newMessage) return
 		addMessageToDbAndUpdateLastSeen()
@@ -159,9 +159,14 @@ const ConversationScreen = ({conversation, messages} : {conversation:Conversatio
                 <RecipientAvatar recipient={recipient} recipientEmail={recipientEmail}/>
 
                 <StyledHeaderInfo>
-                    <StyledH3>{recipientEmail}</StyledH3>
-                    {recipient && <span>Last active: {convertFireStoreTimestampToString(recipient.lastSeen)}</span>}
-                </StyledHeaderInfo>
+					<StyledH3>{recipientEmail}</StyledH3>
+					{recipient && (
+						<span>
+							Last active:{' '}
+							{convertFireStoreTimestampToString(recipient.lastSeen)}
+						</span>
+					)}
+				</StyledHeaderInfo>
 
 				<StyledHeaderIcons>
 					<IconButton>
